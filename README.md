@@ -23,3 +23,30 @@ arguments untouched.  If no mapping is found it uses the "default" java installa
 
 This means you can just maintain one central list of mappings for your java programs
 and have it automatically run the right version of Java for you.
+
+Installation
+------------
+
+Just run:
+
+    $ sudo make install
+
+To activate the selector either go through your normal `update-alternatives` interface,
+or run:
+
+
+    $ sudo update-alternatives --set java /usr/bin/java-selector
+
+You can add new mappings by editing (as root):
+   
+    /etc/java-mappings
+
+That file contains a list of `file = command` pairs:
+
+    /path/to/jar/file.jar = /path/to/executable/bin/java
+
+For example:
+
+    /usr/share/uecide/uecide.jar = /usr/lib/jvm/java-8-openjdk-amd64/bin/java
+    /usr/share/filebot/FileBot.jar = /usr/lib/jvm/java-8-openjdk-amd64/bin/java
+
