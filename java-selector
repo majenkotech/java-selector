@@ -1,0 +1,38 @@
+#!/usr/bin/perl
+
+use Data::Dumper;
+use IPC::System::Simple qw(systemx);
+
+my $command = "";
+my $nextIsJar = 0;
+
+my @args;
+
+my $jars;
+
+my $java = "/usr/lib/jvm/default-java/bin/java";
+
+open(F, "</etc/java-mappings");
+while (my $l = <F>) {
+    chomp($l);
+    if ($l =~ /^\s*(.*)\s*=\s*(.*)\s*$/) {
+        my $jn = $1;
+        my $jv = $2;
+        $jn =~ s/^\s+|\s+$//g;
+        $jv =~ s/^\s+|\s+$//g;
+        $jars->{$jn} = $jv;
+    }
+}
+close(F);
+
+foreach my $arg (@ARGV) {
+    if ($arg =~ /\.jar$/) {
+        if ($jars->{$arg}) {
+            $java = $jars->{$arg};
+        }
+    }
+}
+
+print("Running using $java\n");
+
+systemx($java, @ARGV);
