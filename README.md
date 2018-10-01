@@ -27,7 +27,11 @@ and have it automatically run the right version of Java for you.
 Installation
 ------------
 
-Just run:
+Requires IPC::System::Simple:
+
+    $ sudo apt-get install libipc-system-simple-perl
+
+Then just run:
 
     $ sudo make install
 
